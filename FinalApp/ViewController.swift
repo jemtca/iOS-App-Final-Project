@@ -2,8 +2,6 @@
 //  ViewController.swift
 //  FinalApp
 //
-//  Created by Jesuly MC on 12/7/18.
-//
 
 import UIKit
 
@@ -21,4 +19,3 @@ class ViewController: UIViewController {
 
 
 }
-

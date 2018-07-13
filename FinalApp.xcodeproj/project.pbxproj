@@ -56,15 +56,23 @@
 		EB4F286020F7F9930044A699 /* FinalApp */ = {
 			isa = PBXGroup;
 			children = (
-				EB4F286120F7F9930044A699 /* AppDelegate.swift */,
+				EBAE559F20F8178B00F6B011 /* Supporting Files */,
 				EB4F286320F7F9930044A699 /* ViewController.swift */,
 				EB4F286520F7F9930044A699 /* Main.storyboard */,
-				EB4F286B20F7F9940044A699 /* Assets.xcassets */,
-				EB4F286D20F7F9940044A699 /* LaunchScreen.storyboard */,
 				EB4F287020F7F9940044A699 /* Info.plist */,
 				EB4F286820F7F9930044A699 /* FinalApp.xcdatamodeld */,
 			);
 			path = FinalApp;
+			sourceTree = "<group>";
+		};
+		EBAE559F20F8178B00F6B011 /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				EB4F286120F7F9930044A699 /* AppDelegate.swift */,
+				EB4F286B20F7F9940044A699 /* Assets.xcassets */,
+				EB4F286D20F7F9940044A699 /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */

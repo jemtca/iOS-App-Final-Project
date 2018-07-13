@@ -2,8 +2,6 @@
 //  AppDelegate.swift
 //  FinalApp
 //
-//  Created by Jesuly MC on 12/7/18.
-//
 
 import UIKit
 import CoreData
@@ -89,4 +87,3 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     }
 
 }
-
