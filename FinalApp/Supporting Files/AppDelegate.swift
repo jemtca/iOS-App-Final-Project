@@ -6,6 +6,13 @@
 import UIKit
 import CoreData
 
+// change the status bar color (black to white)
+class CustomNavigationController: UINavigationController {
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
@@ -14,6 +21,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
+        // programmably view
+        window = UIWindow()
+        window?.makeKeyAndVisible()
+        
+        // instance of my view controller class (ViewController.swift)
+        let bcController = ViewController()
+        let navController = CustomNavigationController(rootViewController: bcController)
+        window?.rootViewController = navController
+        
         return true
     }
 
