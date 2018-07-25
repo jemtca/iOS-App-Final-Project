@@ -5,8 +5,15 @@
 
 import UIKit
 
-class ViewController: UITableViewController {
+class BusinessCardsController: UITableViewController {
 
+    let businessCards = [
+            BusinessCard(fullName: "fullName1", jobTitle: "jobTitle1", phone: "phone1", email: "email1", website: nil, address: "address1"),
+            BusinessCard(fullName: "fullName2", jobTitle: "jobTitle2", phone: "phone2", email: "email2", website: nil, address: "address2"),
+            BusinessCard(fullName: "fullName3", jobTitle: "jobTitle3", phone: "phone3", email: "email3", website: nil, address: "address3"),
+            BusinessCard(fullName: "fullName4", jobTitle: "jobTitle4", phone: "phone4", email: "email4", website: nil, address: "address4")
+    ]
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
@@ -25,12 +32,17 @@ class ViewController: UITableViewController {
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBC))
-        
-        setupNavigationController()
     }
     
     @objc func handleAddBC() {
         print("Adding BC...")
+        
+        let createBC = CreateBusinessCardController()
+        
+        let navController = CustomNavigationController(rootViewController: createBC)
+        
+        present(navController, animated: true, completion: nil)
+        
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -48,7 +60,9 @@ class ViewController: UITableViewController {
         
         cell.backgroundColor = UIColor.white
         
-        cell.textLabel?.text = "Business card"
+        let businesCard = businessCards[indexPath.row]
+        
+        cell.textLabel?.text = businesCard.fullName
         //cell.textLabel?.textColor = UIColor.mercury
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
         
@@ -56,18 +70,7 @@ class ViewController: UITableViewController {
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10
-    }
-    
-    // function to setup the navigation controller
-    func setupNavigationController() {
-        navigationController?.navigationBar.isTranslucent = false
-        navigationController?.navigationBar.barTintColor = UIColor.black
-        
-        navigationController?.navigationBar.titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
-        
-        navigationController?.navigationBar.prefersLargeTitles = true
-        navigationController?.navigationBar.largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        return businessCards.count
     }
 
 }

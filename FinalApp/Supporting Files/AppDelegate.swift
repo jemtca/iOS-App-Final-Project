@@ -22,12 +22,24 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
         
+        // moving the code inside this function, all the screens will have the same apparence
+        // replace navigationController?.navigationBar (before inside a function) for UINavigationBar.appearance()
+        UINavigationBar.appearance().tintColor = UIColor.white
+        
+        UINavigationBar.appearance().isTranslucent = false
+        UINavigationBar.appearance().barTintColor = UIColor.black
+        
+        UINavigationBar.appearance().titleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        
+        UINavigationBar.appearance().prefersLargeTitles = true
+        UINavigationBar.appearance().largeTitleTextAttributes = [NSAttributedStringKey.foregroundColor:UIColor.white]
+        
         // programmably view
         window = UIWindow()
         window?.makeKeyAndVisible()
         
-        // instance of my view controller class (ViewController.swift)
-        let bcController = ViewController()
+        // instance of my view controller class (BusinessCardsController.swift)
+        let bcController = BusinessCardsController()
         let navController = CustomNavigationController(rootViewController: bcController)
         window?.rootViewController = navController
         

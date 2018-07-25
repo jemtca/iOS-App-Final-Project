@@ -8,24 +8,28 @@
 
 /* Begin PBXBuildFile section */
 		EB4F286220F7F9930044A699 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F286120F7F9930044A699 /* AppDelegate.swift */; };
-		EB4F286420F7F9930044A699 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F286320F7F9930044A699 /* ViewController.swift */; };
+		EB4F286420F7F9930044A699 /* BusinessCardsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB4F286320F7F9930044A699 /* BusinessCardsController.swift */; };
 		EB4F286720F7F9930044A699 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286520F7F9930044A699 /* Main.storyboard */; };
 		EB4F286A20F7F9930044A699 /* FinalApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB4F286820F7F9930044A699 /* FinalApp.xcdatamodeld */; };
 		EB4F286C20F7F9940044A699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286B20F7F9940044A699 /* Assets.xcassets */; };
 		EB4F286F20F7F9940044A699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286D20F7F9940044A699 /* LaunchScreen.storyboard */; };
 		EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C121084767008B4007 /* UIColor+theme.swift */; };
+		EB9804C42109253A008B4007 /* BusinessCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C32109253A008B4007 /* BusinessCard.swift */; };
+		EB9804C821093825008B4007 /* CreateBusinessCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C721093825008B4007 /* CreateBusinessCardController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		EB4F285E20F7F9930044A699 /* FinalApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FinalApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		EB4F286120F7F9930044A699 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		EB4F286320F7F9930044A699 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		EB4F286320F7F9930044A699 /* BusinessCardsController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCardsController.swift; sourceTree = "<group>"; };
 		EB4F286620F7F9930044A699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		EB4F286920F7F9930044A699 /* FinalApp.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = FinalApp.xcdatamodel; sourceTree = "<group>"; };
 		EB4F286B20F7F9940044A699 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB4F286E20F7F9940044A699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB4F287020F7F9940044A699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB9804C121084767008B4007 /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
+		EB9804C32109253A008B4007 /* BusinessCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCard.swift; sourceTree = "<group>"; };
+		EB9804C721093825008B4007 /* CreateBusinessCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBusinessCardController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,11 +63,13 @@
 			isa = PBXGroup;
 			children = (
 				EBAE559F20F8178B00F6B011 /* Supporting Files */,
-				EB4F286320F7F9930044A699 /* ViewController.swift */,
+				EB9804C32109253A008B4007 /* BusinessCard.swift */,
+				EB4F286320F7F9930044A699 /* BusinessCardsController.swift */,
+				EB9804C721093825008B4007 /* CreateBusinessCardController.swift */,
+				EB9804C121084767008B4007 /* UIColor+theme.swift */,
 				EB4F286520F7F9930044A699 /* Main.storyboard */,
 				EB4F287020F7F9940044A699 /* Info.plist */,
 				EB4F286820F7F9930044A699 /* FinalApp.xcdatamodeld */,
-				EB9804C121084767008B4007 /* UIColor+theme.swift */,
 			);
 			path = FinalApp;
 			sourceTree = "<group>";
@@ -148,8 +154,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				EB4F286420F7F9930044A699 /* ViewController.swift in Sources */,
+				EB4F286420F7F9930044A699 /* BusinessCardsController.swift in Sources */,
+				EB9804C821093825008B4007 /* CreateBusinessCardController.swift in Sources */,
 				EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */,
+				EB9804C42109253A008B4007 /* BusinessCard.swift in Sources */,
 				EB4F286A20F7F9930044A699 /* FinalApp.xcdatamodeld in Sources */,
 				EB4F286220F7F9930044A699 /* AppDelegate.swift in Sources */,
 			);
