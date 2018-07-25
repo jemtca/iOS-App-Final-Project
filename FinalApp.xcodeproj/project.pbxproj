@@ -13,6 +13,7 @@
 		EB4F286A20F7F9930044A699 /* FinalApp.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = EB4F286820F7F9930044A699 /* FinalApp.xcdatamodeld */; };
 		EB4F286C20F7F9940044A699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286B20F7F9940044A699 /* Assets.xcassets */; };
 		EB4F286F20F7F9940044A699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286D20F7F9940044A699 /* LaunchScreen.storyboard */; };
+		EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C121084767008B4007 /* UIColor+theme.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +25,7 @@
 		EB4F286B20F7F9940044A699 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		EB4F286E20F7F9940044A699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB4F287020F7F9940044A699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EB9804C121084767008B4007 /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -61,6 +63,7 @@
 				EB4F286520F7F9930044A699 /* Main.storyboard */,
 				EB4F287020F7F9940044A699 /* Info.plist */,
 				EB4F286820F7F9930044A699 /* FinalApp.xcdatamodeld */,
+				EB9804C121084767008B4007 /* UIColor+theme.swift */,
 			);
 			path = FinalApp;
 			sourceTree = "<group>";
@@ -146,6 +149,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB4F286420F7F9930044A699 /* ViewController.swift in Sources */,
+				EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */,
 				EB4F286A20F7F9930044A699 /* FinalApp.xcdatamodeld in Sources */,
 				EB4F286220F7F9930044A699 /* AppDelegate.swift in Sources */,
 			);
