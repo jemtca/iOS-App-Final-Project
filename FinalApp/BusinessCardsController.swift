@@ -5,14 +5,37 @@
 
 import UIKit
 
-class BusinessCardsController: UITableViewController {
+class BusinessCardsController: UITableViewController, CreateBusinessCardControllerDelegate {
+    
+    func didAddBusinessCard(businessCard: BusinessCard) {
+        // modify array
+        businessCards.append(businessCard)
+        
+        // insert a new index path into tableView
+        let indexPath = IndexPath(row: businessCards.count - 1, section: 0)
+        tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+    }
 
-    let businessCards = [
-            BusinessCard(fullName: "fullName1", jobTitle: "jobTitle1", phone: "phone1", email: "email1", website: nil, address: "address1"),
-            BusinessCard(fullName: "fullName2", jobTitle: "jobTitle2", phone: "phone2", email: "email2", website: nil, address: "address2"),
-            BusinessCard(fullName: "fullName3", jobTitle: "jobTitle3", phone: "phone3", email: "email3", website: nil, address: "address3"),
-            BusinessCard(fullName: "fullName4", jobTitle: "jobTitle4", phone: "phone4", email: "email4", website: nil, address: "address4")
+    // var because the array has to change (adding/deleting elements from the array)
+    var businessCards = [
+        BusinessCard(fullName: "fullName1"),
+        BusinessCard(fullName: "fullName2"),
+        BusinessCard(fullName: "fullName3"),
+        BusinessCard(fullName: "fullName4")
+//            BusinessCard(fullName: "fullName1", jobTitle: "jobTitle1", phone: "phone1", email: "email1", website: nil, address: "address1"),
+//            BusinessCard(fullName: "fullName2", jobTitle: "jobTitle2", phone: "phone2", email: "email2", website: nil, address: "address2"),
+//            BusinessCard(fullName: "fullName3", jobTitle: "jobTitle3", phone: "phone3", email: "email3", website: nil, address: "address3"),
+//            BusinessCard(fullName: "fullName4", jobTitle: "jobTitle4", phone: "phone4", email: "email4", website: nil, address: "address4")
     ]
+    
+//    func addBusinessCard(businessCard: BusinessCard) {
+//        // modify array
+//        businessCards.append(businessCard)
+//
+//        // insert a new index path into tableView
+//        let indexPath = IndexPath(row: businessCards.count - 1, section: 0)
+//        tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+//    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,14 +58,14 @@ class BusinessCardsController: UITableViewController {
     }
     
     @objc func handleAddBC() {
-        print("Adding BC...")
-        
         let createBC = CreateBusinessCardController()
         
         let navController = CustomNavigationController(rootViewController: createBC)
         
-        present(navController, animated: true, completion: nil)
+        //createBC.businessCardsController = self // link
+        createBC.delegate = self
         
+        present(navController, animated: true, completion: nil)
     }
     
     override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
