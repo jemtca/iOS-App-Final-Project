@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import CoreData
 
 // custom delegation
 protocol CreateBusinessCardControllerDelegate {
@@ -89,12 +90,34 @@ class CreateBusinessCardController: UIViewController {
     @objc func handleSave() {
         // code inside the clousure to save first then see the animation
         // inside the clousure self it needed to avoid retain cycle
-        dismiss(animated: true) {
-            guard let name = self.nameTextField.text else { return }
-            let businessCard = BusinessCard(fullName: name)
-            //self.businessCardsController?.addBusinessCard(businessCard: businessCard)
-            self.delegate?.didAddBusinessCard(businessCard: businessCard)
+//        dismiss(animated: true) {
+//            guard let name = self.nameTextField.text else { return }
+//            let businessCard = BusinessCard(fullName: name)
+//            //self.businessCardsController?.addBusinessCard(businessCard: businessCard)
+//            self.delegate?.didAddBusinessCard(businessCard: businessCard)
+//        }
+        
+        // initialization of Core Data stack
+        let persistentContainer = NSPersistentContainer(name: "FinalApp")
+        persistentContainer.loadPersistentStores { (storeDescription, err) in
+            if let err = err {
+                fatalError("Loading of store failed: \(err)")
+            }
         }
+        
+        let context = persistentContainer.viewContext
+        
+        let businessCard = NSEntityDescription.insertNewObject(forEntityName: "BusinessCard", into: context)
+        
+        businessCard.setValue(nameTextField.text, forKey: "fullName")
+        
+        // perform save
+        do {
+            try context.save()
+        } catch let saveErr {
+            print("Failed to save business card: \(saveErr)")
+        }
+        
     }
     
 }

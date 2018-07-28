@@ -4,6 +4,7 @@
 //
 
 import UIKit
+import CoreData
 
 class BusinessCardsController: UITableViewController, CreateBusinessCardControllerDelegate {
     
@@ -17,16 +18,7 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
     }
 
     // var because the array has to change (adding/deleting elements from the array)
-    var businessCards = [
-        BusinessCard(fullName: "fullName1"),
-        BusinessCard(fullName: "fullName2"),
-        BusinessCard(fullName: "fullName3"),
-        BusinessCard(fullName: "fullName4")
-//            BusinessCard(fullName: "fullName1", jobTitle: "jobTitle1", phone: "phone1", email: "email1", website: nil, address: "address1"),
-//            BusinessCard(fullName: "fullName2", jobTitle: "jobTitle2", phone: "phone2", email: "email2", website: nil, address: "address2"),
-//            BusinessCard(fullName: "fullName3", jobTitle: "jobTitle3", phone: "phone3", email: "email3", website: nil, address: "address3"),
-//            BusinessCard(fullName: "fullName4", jobTitle: "jobTitle4", phone: "phone4", email: "email4", website: nil, address: "address4")
-    ]
+    var businessCards = [BusinessCard]() // empty array
     
 //    func addBusinessCard(businessCard: BusinessCard) {
 //        // modify array
