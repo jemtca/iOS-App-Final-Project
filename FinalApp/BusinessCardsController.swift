@@ -29,9 +29,30 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
 //        tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
 //    }
     
+    private func fetchBusinessCards() {
+        //attempt my core data fetch somehow...
+        
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<BusinessCard>(entityName: "BusinessCard")
+        
+        do {
+            let businessCards = try context.fetch(fetchRequest)
+            businessCards.forEach { (businessCard) in
+                print(businessCard.fullName ?? "")
+            }
+            self.businessCards = businessCards
+            self.tableView.reloadData()
+        } catch let fetchErr {
+            print("Failed to fetch business cards: \(fetchErr)")
+        }
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
+        fetchBusinessCards()
         
         view.backgroundColor = UIColor.white
         

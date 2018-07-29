@@ -18,7 +18,7 @@ class CreateBusinessCardController: UIViewController {
     
     var delegate: CreateBusinessCardControllerDelegate?
     
-    let nameLabel: UILabel = {
+    let fullNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
         // enable autolayout
@@ -26,7 +26,7 @@ class CreateBusinessCardController: UIViewController {
         return label
     }()
     
-    let nameTextField: UITextField = {
+    let fullNameTextField: UITextField = {
         let textField = UITextField()
         textField.placeholder = "Enter name"
         // enable autolayout
@@ -67,20 +67,20 @@ class CreateBusinessCardController: UIViewController {
         whiteBackgroung.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // name label
-        view.addSubview(nameLabel)
-        nameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-        nameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X notch
-        nameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
-        //nameLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        nameLabel.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        view.addSubview(fullNameLabel)
+        fullNameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        fullNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X notch
+        fullNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //fullNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        fullNameLabel.heightAnchor.constraint(equalToConstant: 150).isActive = true
         
         // name text field
-        view.addSubview(nameTextField)
-        nameTextField.topAnchor.constraint(equalTo: whiteBackgroung.topAnchor).isActive = true // important one!
-        nameTextField.leftAnchor.constraint(equalTo: nameLabel.rightAnchor).isActive = true // important one!
-        nameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        nameTextField.bottomAnchor.constraint(equalTo: whiteBackgroung.bottomAnchor).isActive = true // important one!
-//        nameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true // same as before
+        view.addSubview(fullNameTextField)
+        fullNameTextField.topAnchor.constraint(equalTo: whiteBackgroung.topAnchor).isActive = true // important one!
+        fullNameTextField.leftAnchor.constraint(equalTo: fullNameLabel.rightAnchor).isActive = true // important one!
+        fullNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        fullNameTextField.bottomAnchor.constraint(equalTo: whiteBackgroung.bottomAnchor).isActive = true // important one!
+//        fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true // same as before
     }
     
     @objc func handleCancel() {
@@ -91,29 +91,25 @@ class CreateBusinessCardController: UIViewController {
         // code inside the clousure to save first then see the animation
         // inside the clousure self it needed to avoid retain cycle
 //        dismiss(animated: true) {
-//            guard let name = self.nameTextField.text else { return }
+//            guard let name = self.fullNameTextField.text else { return }
 //            let businessCard = BusinessCard(fullName: name)
 //            //self.businessCardsController?.addBusinessCard(businessCard: businessCard)
 //            self.delegate?.didAddBusinessCard(businessCard: businessCard)
 //        }
         
-        // initialization of Core Data stack
-        let persistentContainer = NSPersistentContainer(name: "FinalApp")
-        persistentContainer.loadPersistentStores { (storeDescription, err) in
-            if let err = err {
-                fatalError("Loading of store failed: \(err)")
-            }
-        }
-        
-        let context = persistentContainer.viewContext
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         
         let businessCard = NSEntityDescription.insertNewObject(forEntityName: "BusinessCard", into: context)
         
-        businessCard.setValue(nameTextField.text, forKey: "fullName")
+        businessCard.setValue(fullNameTextField.text, forKey: "fullName")
         
         // perform save
         do {
             try context.save()
+            // success
+            dismiss(animated: true) {
+                self.delegate?.didAddBusinessCard(businessCard: businessCard as! BusinessCard)
+            }
         } catch let saveErr {
             print("Failed to save business card: \(saveErr)")
         }
