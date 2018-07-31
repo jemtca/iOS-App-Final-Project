@@ -29,6 +29,34 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
 //        tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
 //    }
     
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
+            let businessCard = self.businessCards[indexPath.row]
+            print("Attempting to delete company: \(businessCard.fullName ?? "")")
+            
+            // remove the business card from the tableview
+            self.businessCards.remove(at: indexPath.row)
+            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+            
+            // delete the business card fom Core Data
+            let context = CoreDataManager.shared.persistentContainer.viewContext
+            context.delete(businessCard)
+            
+            do {
+                try context.save()
+            } catch let saveErr {
+                print("Failed to delete business card: \(saveErr)")
+            }
+            
+        }
+        
+        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPAth) in
+            print("Editting business card...")
+        }
+        
+        return [deleteAction, editAction]
+    }
+    
     private func fetchBusinessCards() {
         //attempt my core data fetch somehow...
         
