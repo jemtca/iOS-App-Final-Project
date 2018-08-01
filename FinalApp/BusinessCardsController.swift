@@ -16,65 +16,16 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         let indexPath = IndexPath(row: businessCards.count - 1, section: 0)
         tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
     }
+    
+    func didEditBusinessCard(businessCard: BusinessCard) {
+        // update my tableview
+        let row = businessCards.index(of: businessCard)
+        let reloadIndexPath = IndexPath(item: row!, section: 0)
+        tableView.reloadRows(at: [reloadIndexPath], with: UITableViewRowAnimation.automatic)
+    }
 
     // var because the array has to change (adding/deleting elements from the array)
     var businessCards = [BusinessCard]() // empty array
-    
-//    func addBusinessCard(businessCard: BusinessCard) {
-//        // modify array
-//        businessCards.append(businessCard)
-//
-//        // insert a new index path into tableView
-//        let indexPath = IndexPath(row: businessCards.count - 1, section: 0)
-//        tableView.insertRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-//    }
-    
-    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
-        let deleteAction = UITableViewRowAction(style: .destructive, title: "Delete") { (_, indexPath) in
-            let businessCard = self.businessCards[indexPath.row]
-            print("Attempting to delete company: \(businessCard.fullName ?? "")")
-            
-            // remove the business card from the tableview
-            self.businessCards.remove(at: indexPath.row)
-            self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
-            
-            // delete the business card fom Core Data
-            let context = CoreDataManager.shared.persistentContainer.viewContext
-            context.delete(businessCard)
-            
-            do {
-                try context.save()
-            } catch let saveErr {
-                print("Failed to delete business card: \(saveErr)")
-            }
-            
-        }
-        
-        let editAction = UITableViewRowAction(style: .normal, title: "Edit") { (_, indexPAth) in
-            print("Editting business card...")
-        }
-        
-        return [deleteAction, editAction]
-    }
-    
-    private func fetchBusinessCards() {
-        //attempt my core data fetch somehow...
-        
-        let context = CoreDataManager.shared.persistentContainer.viewContext
-        
-        let fetchRequest = NSFetchRequest<BusinessCard>(entityName: "BusinessCard")
-        
-        do {
-            let businessCards = try context.fetch(fetchRequest)
-            businessCards.forEach { (businessCard) in
-                print(businessCard.fullName ?? "")
-            }
-            self.businessCards = businessCards
-            self.tableView.reloadData()
-        } catch let fetchErr {
-            print("Failed to fetch business cards: \(fetchErr)")
-        }
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -95,17 +46,73 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
         
-        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBC))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBusinessCard))
     }
     
-    @objc func handleAddBC() {
-        let createBC = CreateBusinessCardController()
+    private func fetchBusinessCards() {
+        //attempt my core data fetch
+        let context = CoreDataManager.shared.persistentContainer.viewContext
         
-        let navController = CustomNavigationController(rootViewController: createBC)
+        let fetchRequest = NSFetchRequest<BusinessCard>(entityName: "BusinessCard")
         
-        //createBC.businessCardsController = self // link
-        createBC.delegate = self
+        do {
+            let businessCards = try context.fetch(fetchRequest)
+            businessCards.forEach { (businessCard) in
+                print(businessCard.fullName ?? "")
+            }
+            self.businessCards = businessCards
+            self.tableView.reloadData()
+        } catch let fetchErr {
+            print("Failed to fetch business cards: \(fetchErr)")
+        }
+    }
+    
+    @objc func handleAddBusinessCard() {
+        let createBusinessCard = CreateBusinessCardController()
         
+        let navController = CustomNavigationController(rootViewController: createBusinessCard)
+        
+        createBusinessCard.delegate = self
+        
+        present(navController, animated: true, completion: nil)
+    }
+    
+    override func tableView(_ tableView: UITableView, editActionsForRowAt indexPath: IndexPath) -> [UITableViewRowAction]? {
+        
+        // delete action
+        let deleteAction = UITableViewRowAction(style: UITableViewRowActionStyle.destructive, title: "Delete", handler: deleteHandlerFunction)
+        deleteAction.backgroundColor = UIColor.lightRed
+        
+        // edit action
+        let editAction = UITableViewRowAction(style: UITableViewRowActionStyle.normal, title: "Edit", handler: editHandlerFunction)
+        editAction.backgroundColor = UIColor.black
+        
+        return [deleteAction, editAction]
+    }
+    
+    private func deleteHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        let businessCard = self.businessCards[indexPath.row]
+            
+        // remove the business card from the tableview
+        self.businessCards.remove(at: indexPath.row)
+        self.tableView.deleteRows(at: [indexPath], with: UITableViewRowAnimation.automatic)
+        
+        // delete the business card fom Core Data
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        context.delete(businessCard)
+            
+        do {
+            try context.save()
+        } catch let saveErr {
+            print("Failed to delete business card: \(saveErr)")
+        }
+    }
+    
+    private func editHandlerFunction(action: UITableViewRowAction, indexPath: IndexPath) {
+        let editBusinessCardController = CreateBusinessCardController()
+        editBusinessCardController.delegate = self
+        editBusinessCardController.businessCard = businessCards[indexPath.row]
+        let navController = CustomNavigationController(rootViewController: editBusinessCardController)
         present(navController, animated: true, completion: nil)
     }
     
