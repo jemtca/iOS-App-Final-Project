@@ -13,6 +13,13 @@ class CustomNavigationController: UINavigationController {
     }
 }
 
+// to see a white status bar when choosing a photo from the galery (UIImagePickerController)
+extension UINavigationController {
+    open override var preferredStatusBarStyle: UIStatusBarStyle {
+        return UIStatusBarStyle.lightContent
+    }
+}
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 

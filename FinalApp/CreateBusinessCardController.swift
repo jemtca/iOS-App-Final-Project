@@ -22,6 +22,23 @@ class CreateBusinessCardController: UIViewController {
         }
     }
     
+    // changed from let to lazy var
+    lazy var businessCardImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "select_image_empty"))
+        // enable autolayout
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        // make the image view interactive
+        imageView.isUserInteractionEnabled = true
+        imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
+        return imageView
+    }()
+    
+    @objc private func handleSelectPhoto() {
+        let imagePickerController = UIImagePickerController()
+        
+        present(imagePickerController, animated: true, completion: nil)
+    }
+    
     let fullNameLabel: UILabel = {
         let label = UILabel()
         label.text = "Name"
@@ -116,7 +133,7 @@ class CreateBusinessCardController: UIViewController {
         lightRed.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         lightRed.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        // white background for the name label
+        // white background
         let whiteBackgroung = UIView()
         whiteBackgroung.backgroundColor = UIColor.white
         whiteBackgroung.translatesAutoresizingMaskIntoConstraints = false
@@ -124,23 +141,30 @@ class CreateBusinessCardController: UIViewController {
         whiteBackgroung.topAnchor.constraint(equalTo: lightRed.bottomAnchor).isActive = true // important one!
         whiteBackgroung.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         whiteBackgroung.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        whiteBackgroung.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        // change this value depending on how many elements on the screen
+        whiteBackgroung.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        
+        // image view
+        view.addSubview(businessCardImageView)
+        businessCardImageView.topAnchor.constraint(equalTo: lightRed.bottomAnchor).isActive = true
+        businessCardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true // center the image
+        businessCardImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        businessCardImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         // name label
         view.addSubview(fullNameLabel)
-        fullNameLabel.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+        fullNameLabel.topAnchor.constraint(equalTo: businessCardImageView.bottomAnchor).isActive = true
         fullNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X notch
         fullNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         //fullNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        fullNameLabel.heightAnchor.constraint(equalToConstant: 150).isActive = true
+        fullNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
         // name text field
         view.addSubview(fullNameTextField)
-        fullNameTextField.topAnchor.constraint(equalTo: whiteBackgroung.topAnchor).isActive = true // important one!
+        fullNameTextField.topAnchor.constraint(equalTo: businessCardImageView.bottomAnchor).isActive = true
         fullNameTextField.leftAnchor.constraint(equalTo: fullNameLabel.rightAnchor).isActive = true // important one!
         fullNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        fullNameTextField.bottomAnchor.constraint(equalTo: whiteBackgroung.bottomAnchor).isActive = true // important one!
-//        fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true // same as before
+        fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
 }
