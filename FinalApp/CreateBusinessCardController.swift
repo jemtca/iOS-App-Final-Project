@@ -12,7 +12,7 @@ protocol CreateBusinessCardControllerDelegate {
     func didEditBusinessCard(businessCard: BusinessCard)
 }
 
-class CreateBusinessCardController: UIViewController {
+class CreateBusinessCardController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
     
     var delegate: CreateBusinessCardControllerDelegate?
     
@@ -36,7 +36,26 @@ class CreateBusinessCardController: UIViewController {
     @objc private func handleSelectPhoto() {
         let imagePickerController = UIImagePickerController()
         
+        imagePickerController.delegate = self
+        imagePickerController.allowsEditing = true
+        
         present(imagePickerController, animated: true, completion: nil)
+    }
+    
+    func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        dismiss(animated: true, completion: nil)
+    }
+    
+    func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+        
+        if let editImagine = info[UIImagePickerControllerEditedImage] as? UIImage {
+            businessCardImageView.image = editImagine
+        } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
+            businessCardImageView.image = originalImage
+        }
+        
+        dismiss(animated: true, completion: nil)
+        
     }
     
     let fullNameLabel: UILabel = {
@@ -146,7 +165,7 @@ class CreateBusinessCardController: UIViewController {
         
         // image view
         view.addSubview(businessCardImageView)
-        businessCardImageView.topAnchor.constraint(equalTo: lightRed.bottomAnchor).isActive = true
+        businessCardImageView.topAnchor.constraint(equalTo: lightRed.bottomAnchor, constant: 15).isActive = true
         businessCardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true // center the image
         businessCardImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         businessCardImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
