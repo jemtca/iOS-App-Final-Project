@@ -46,11 +46,13 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         
         tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
         
+        navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleReset))
+        
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBusinessCard))
     }
     
     private func fetchBusinessCards() {
-        //attempt my core data fetch
+        //attempt core data fetch
         let context = CoreDataManager.shared.persistentContainer.viewContext
         
         let fetchRequest = NSFetchRequest<BusinessCard>(entityName: "BusinessCard")
@@ -64,6 +66,30 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
             self.tableView.reloadData()
         } catch let fetchErr {
             print("Failed to fetch business cards: \(fetchErr)")
+        }
+    }
+    
+    @objc private func handleReset() {
+        // reset core data and array
+        let context = CoreDataManager.shared.persistentContainer.viewContext
+        let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: BusinessCard.fetchRequest())
+        do{
+            try context.execute(batchDeleteRequest)
+            
+            // animation
+            var indexPathsToRemove = [IndexPath]()
+            for (index, _) in businessCards.enumerated() {
+                let indexPath = IndexPath(row: index, section: 0)
+                indexPathsToRemove.append(indexPath)
+            }
+            businessCards.removeAll()
+            tableView.deleteRows(at: indexPathsToRemove, with: UITableViewRowAnimation.left)
+            
+            // no animation
+            //businessCards.removeAll()
+            //tableView.reloadData()
+        } catch let deleteErr {
+            print("Failed to delete objects from Core Data: \(deleteErr)")
         }
     }
     
@@ -124,6 +150,19 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
     
     override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
+    }
+    
+    override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        let label = UILabel()
+        label.text = "No business cards available..."
+        //label.textColor = UIColor.black
+        label.textAlignment = NSTextAlignment.center
+        label.font = UIFont.boldSystemFont(ofSize: 18)
+        return label
+    }
+
+    override func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return businessCards.count == 0 ? 150 : 0
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
