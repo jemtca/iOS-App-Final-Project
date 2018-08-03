@@ -44,7 +44,7 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         // it doesn't show the separators outside of the table view
         tableView.tableFooterView = UIView() // blank UIView
         
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cellID")
+        tableView.register(BusinessCardCell.self, forCellReuseIdentifier: "cellID")
         
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleReset))
         
@@ -152,6 +152,10 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         return 50
     }
     
+    override func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 60
+    }
+    
     override func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let label = UILabel()
         label.text = "No business cards available..."
@@ -166,23 +170,10 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
     }
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! BusinessCardCell
         
-        cell.backgroundColor = UIColor.white
-        
-        let businesCard = businessCards[indexPath.row]
-        
-        cell.textLabel?.text = businesCard.fullName
-        //cell.textLabel?.textColor = UIColor.mercury
-        cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
-        
-        // image by default
-        cell.imageView?.image = #imageLiteral(resourceName: "select_logo_empty")
-        
-        // logo for those business cards with it
-        if let imageData = businesCard.imageData {
-            cell.imageView?.image = UIImage(data: imageData)
-        }
+        let businessCard = businessCards[indexPath.row]
+        cell.businessCard = businessCard
         
         return cell
     }
