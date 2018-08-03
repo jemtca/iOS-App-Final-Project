@@ -15,6 +15,8 @@
 		EB4F286C20F7F9940044A699 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286B20F7F9940044A699 /* Assets.xcassets */; };
 		EB4F286F20F7F9940044A699 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = EB4F286D20F7F9940044A699 /* LaunchScreen.storyboard */; };
 		EB5297602114046B00CFF1D5 /* BusinessCardCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB52975F2114046B00CFF1D5 /* BusinessCardCell.swift */; };
+		EB529766211432D700CFF1D5 /* BusinessCardsController+UITableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB529765211432D700CFF1D5 /* BusinessCardsController+UITableViewDelegate.swift */; };
+		EB5297682114333300CFF1D5 /* BusinessCardsController+CreateCompanyDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB5297672114333300CFF1D5 /* BusinessCardsController+CreateCompanyDelegate.swift */; };
 		EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C121084767008B4007 /* UIColor+theme.swift */; };
 		EB9804C42109253A008B4007 /* BusinessCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C32109253A008B4007 /* BusinessCard.swift */; };
 		EB9804C821093825008B4007 /* CreateBusinessCardController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EB9804C721093825008B4007 /* CreateBusinessCardController.swift */; };
@@ -31,6 +33,8 @@
 		EB4F286E20F7F9940044A699 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		EB4F287020F7F9940044A699 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		EB52975F2114046B00CFF1D5 /* BusinessCardCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCardCell.swift; sourceTree = "<group>"; };
+		EB529765211432D700CFF1D5 /* BusinessCardsController+UITableViewDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BusinessCardsController+UITableViewDelegate.swift"; sourceTree = "<group>"; };
+		EB5297672114333300CFF1D5 /* BusinessCardsController+CreateCompanyDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "BusinessCardsController+CreateCompanyDelegate.swift"; sourceTree = "<group>"; };
 		EB9804C121084767008B4007 /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
 		EB9804C32109253A008B4007 /* BusinessCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BusinessCard.swift; sourceTree = "<group>"; };
 		EB9804C721093825008B4007 /* CreateBusinessCardController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateBusinessCardController.swift; sourceTree = "<group>"; };
@@ -70,6 +74,8 @@
 				EB9804C32109253A008B4007 /* BusinessCard.swift */,
 				EB52975F2114046B00CFF1D5 /* BusinessCardCell.swift */,
 				EB4F286320F7F9930044A699 /* BusinessCardsController.swift */,
+				EB5297672114333300CFF1D5 /* BusinessCardsController+CreateCompanyDelegate.swift */,
+				EB529765211432D700CFF1D5 /* BusinessCardsController+UITableViewDelegate.swift */,
 				EB37A885210D83C7005DC408 /* CoreDataManager.swift */,
 				EB9804C721093825008B4007 /* CreateBusinessCardController.swift */,
 				EB9804C121084767008B4007 /* UIColor+theme.swift */,
@@ -161,10 +167,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				EB4F286420F7F9930044A699 /* BusinessCardsController.swift in Sources */,
+				EB529766211432D700CFF1D5 /* BusinessCardsController+UITableViewDelegate.swift in Sources */,
 				EB9804C821093825008B4007 /* CreateBusinessCardController.swift in Sources */,
 				EB9804C221084767008B4007 /* UIColor+theme.swift in Sources */,
 				EB9804C42109253A008B4007 /* BusinessCard.swift in Sources */,
 				EB4F286A20F7F9930044A699 /* FinalApp.xcdatamodeld in Sources */,
+				EB5297682114333300CFF1D5 /* BusinessCardsController+CreateCompanyDelegate.swift in Sources */,
 				EB37A886210D83C7005DC408 /* CoreDataManager.swift in Sources */,
 				EB4F286220F7F9930044A699 /* AppDelegate.swift in Sources */,
 				EB5297602114046B00CFF1D5 /* BusinessCardCell.swift in Sources */,

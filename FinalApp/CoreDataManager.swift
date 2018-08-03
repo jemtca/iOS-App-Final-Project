@@ -21,4 +21,23 @@ struct CoreDataManager {
         }
         return container
     }()
+    
+    func fetchBusinessCards() -> [BusinessCard] {
+        //attempt core data fetch
+        let context = persistentContainer.viewContext
+        
+        let fetchRequest = NSFetchRequest<BusinessCard>(entityName: "BusinessCard")
+        
+        do {
+            let businessCards = try context.fetch(fetchRequest)
+            businessCards.forEach { (businessCard) in
+                print(businessCard.fullName ?? "")
+            }
+            return businessCards
+        } catch let fetchErr {
+            print("Failed to fetch business cards: \(fetchErr)")
+            return []
+        }
+    }
+    
 }
