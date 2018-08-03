@@ -17,16 +17,23 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
     var delegate: CreateBusinessCardControllerDelegate?
     
     var businessCard: BusinessCard? {
+        // this shows the right information when editing
         didSet {
             fullNameTextField.text = businessCard?.fullName
+            
+            if let imageData = businessCard?.imageData {
+                businessCardLogoImageView.image = UIImage(data: imageData)
+                setupCircularLogoStyle()
+            }
         }
     }
     
     // changed from let to lazy var
-    lazy var businessCardImageView: UIImageView = {
-        let imageView = UIImageView(image: #imageLiteral(resourceName: "select_image_empty"))
+    lazy var businessCardLogoImageView: UIImageView = {
+        let imageView = UIImageView(image: #imageLiteral(resourceName: "select_logo_empty"))
         // enable autolayout
         imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.contentMode = UIViewContentMode.scaleAspectFill
         // make the image view interactive
         imageView.isUserInteractionEnabled = true
         imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
@@ -49,13 +56,25 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
         
         if let editImagine = info[UIImagePickerControllerEditedImage] as? UIImage {
-            businessCardImageView.image = editImagine
+            businessCardLogoImageView.image = editImagine
         } else if let originalImage = info[UIImagePickerControllerOriginalImage] as? UIImage {
-            businessCardImageView.image = originalImage
+            businessCardLogoImageView.image = originalImage
         }
+        
+        setupCircularLogoStyle()
         
         dismiss(animated: true, completion: nil)
         
+    }
+    
+    private func setupCircularLogoStyle() {
+        // make the logo circular
+        businessCardLogoImageView.layer.cornerRadius = businessCardLogoImageView.frame.width / 2
+        businessCardLogoImageView.clipsToBounds = true
+        
+        // add a frame around the logo
+        businessCardLogoImageView.layer.borderColor = UIColor.black.cgColor
+        businessCardLogoImageView.layer.borderWidth = 2
     }
     
     let fullNameLabel: UILabel = {
@@ -85,11 +104,11 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         view.backgroundColor = UIColor.mercury
     }
     
-    @objc func handleCancel() {
+    @objc private func handleCancel() {
         dismiss(animated: true, completion: nil)
     }
     
-    @objc func handleSave() {
+    @objc private func handleSave() {
         if businessCard == nil {
             createBusinessCard()
         }
@@ -105,6 +124,11 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         
         businessCard.setValue(fullNameTextField.text, forKey: "fullName")
         
+        if let businessCardLogo = businessCardLogoImageView.image {
+            let imageData = UIImageJPEGRepresentation(businessCardLogo, 0.8)
+            businessCard.setValue(imageData, forKey: "imageData")
+        }
+
         // perform save
         do {
             try context.save()
@@ -122,6 +146,11 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         let context = CoreDataManager.shared.persistentContainer.viewContext
         
         businessCard?.fullName = fullNameTextField.text
+        
+        if let businessCardLogo = businessCardLogoImageView.image {
+            let imageData = UIImageJPEGRepresentation(businessCardLogo, 0.8)
+            businessCard?.imageData = imageData
+        }
         
         // perform save after changes
         do {
@@ -164,15 +193,15 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         whiteBackgroung.heightAnchor.constraint(equalToConstant: 300).isActive = true
         
         // image view
-        view.addSubview(businessCardImageView)
-        businessCardImageView.topAnchor.constraint(equalTo: lightRed.bottomAnchor, constant: 15).isActive = true
-        businessCardImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true // center the image
-        businessCardImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
-        businessCardImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        view.addSubview(businessCardLogoImageView)
+        businessCardLogoImageView.topAnchor.constraint(equalTo: lightRed.bottomAnchor, constant: 10).isActive = true
+        businessCardLogoImageView.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true // center the image
+        businessCardLogoImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
+        businessCardLogoImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
         // name label
         view.addSubview(fullNameLabel)
-        fullNameLabel.topAnchor.constraint(equalTo: businessCardImageView.bottomAnchor).isActive = true
+        fullNameLabel.topAnchor.constraint(equalTo: businessCardLogoImageView.bottomAnchor).isActive = true
         fullNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X notch
         fullNameLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
         //fullNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -180,7 +209,7 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         
         // name text field
         view.addSubview(fullNameTextField)
-        fullNameTextField.topAnchor.constraint(equalTo: businessCardImageView.bottomAnchor).isActive = true
+        fullNameTextField.topAnchor.constraint(equalTo: businessCardLogoImageView.bottomAnchor).isActive = true
         fullNameTextField.leftAnchor.constraint(equalTo: fullNameLabel.rightAnchor).isActive = true // important one!
         fullNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true

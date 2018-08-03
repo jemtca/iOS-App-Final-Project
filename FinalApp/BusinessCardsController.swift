@@ -67,7 +67,7 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         }
     }
     
-    @objc func handleAddBusinessCard() {
+    @objc private func handleAddBusinessCard() {
         let createBusinessCard = CreateBusinessCardController()
         
         let navController = CustomNavigationController(rootViewController: createBusinessCard)
@@ -136,6 +136,14 @@ class BusinessCardsController: UITableViewController, CreateBusinessCardControll
         cell.textLabel?.text = businesCard.fullName
         //cell.textLabel?.textColor = UIColor.mercury
         cell.textLabel?.font = UIFont.boldSystemFont(ofSize: 20)
+        
+        // image by default
+        cell.imageView?.image = #imageLiteral(resourceName: "select_logo_empty")
+        
+        // logo for those business cards with it
+        if let imageData = businesCard.imageData {
+            cell.imageView?.image = UIImage(data: imageData)
+        }
         
         return cell
     }
