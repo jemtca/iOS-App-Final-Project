@@ -19,12 +19,17 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
     var businessCard: BusinessCard? {
         // this shows the right information when editing
         didSet {
-            fullNameTextField.text = businessCard?.fullName
-            
             if let imageData = businessCard?.imageData {
                 businessCardLogoImageView.image = UIImage(data: imageData)
                 setupCircularLogoStyle()
             }
+            
+            fullNameTextField.text = businessCard?.fullName
+            jobTitleTextField.text = businessCard?.jobTitle
+            phoneTextField.text = businessCard?.phone
+            emailTextField.text = businessCard?.email
+            websiteTextField.text = businessCard?.website
+            addressTextField.text = businessCard?.address
         }
     }
     
@@ -79,7 +84,7 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
     
     let fullNameLabel: UILabel = {
         let label = UILabel()
-        label.text = "Name"
+        label.text = "Full name"
         // enable autolayout
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -87,7 +92,87 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
     
     let fullNameTextField: UITextField = {
         let textField = UITextField()
-        textField.placeholder = "Enter name"
+        textField.placeholder = "Enter full name"
+        // enable autolayout
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let jobTitleLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Job Title"
+        // enable autolayout
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let jobTitleTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter job title"
+        // enable autolayout
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+
+    let phoneLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Phone"
+        // enable autolayout
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let phoneTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter phone"
+        // enable autolayout
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let emailLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Email"
+        // enable autolayout
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let emailTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter email"
+        // enable autolayout
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let websiteLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Website"
+        // enable autolayout
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let websiteTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter website"
+        // enable autolayout
+        textField.translatesAutoresizingMaskIntoConstraints = false
+        return textField
+    }()
+    
+    let addressLabel: UILabel = {
+        let label = UILabel()
+        label.text = "Address"
+        // enable autolayout
+        label.translatesAutoresizingMaskIntoConstraints = false
+        return label
+    }()
+    
+    let addressTextField: UITextField = {
+        let textField = UITextField()
+        textField.placeholder = "Enter address"
         // enable autolayout
         textField.translatesAutoresizingMaskIntoConstraints = false
         return textField
@@ -122,12 +207,17 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         
         let businessCard = NSEntityDescription.insertNewObject(forEntityName: "BusinessCard", into: context)
         
-        businessCard.setValue(fullNameTextField.text, forKey: "fullName")
-        
         if let businessCardLogo = businessCardLogoImageView.image {
             let imageData = UIImageJPEGRepresentation(businessCardLogo, 0.8)
             businessCard.setValue(imageData, forKey: "imageData")
         }
+        
+        businessCard.setValue(fullNameTextField.text, forKey: "fullName")
+        businessCard.setValue(jobTitleTextField.text, forKey: "jobTitle")
+        businessCard.setValue(phoneTextField.text, forKey: "phone")
+        businessCard.setValue(emailTextField.text, forKey: "email")
+        businessCard.setValue(websiteTextField.text, forKey: "website")
+        businessCard.setValue(addressTextField.text, forKey: "address")
 
         // perform save
         do {
@@ -145,12 +235,17 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         
         let context = CoreDataManager.shared.persistentContainer.viewContext
         
-        businessCard?.fullName = fullNameTextField.text
-        
         if let businessCardLogo = businessCardLogoImageView.image {
             let imageData = UIImageJPEGRepresentation(businessCardLogo, 0.8)
             businessCard?.imageData = imageData
         }
+        
+        businessCard?.fullName = fullNameTextField.text
+        businessCard?.jobTitle = jobTitleTextField.text
+        businessCard?.phone = phoneTextField.text
+        businessCard?.email = emailTextField.text
+        businessCard?.website = websiteTextField.text
+        businessCard?.address = addressTextField.text
         
         // perform save after changes
         do {
@@ -190,7 +285,7 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         whiteBackgroung.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
         whiteBackgroung.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         // change this value depending on how many elements on the screen
-        whiteBackgroung.heightAnchor.constraint(equalToConstant: 300).isActive = true
+        whiteBackgroung.heightAnchor.constraint(equalToConstant: 420).isActive = true
         
         // image view
         view.addSubview(businessCardLogoImageView)
@@ -199,7 +294,7 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         businessCardLogoImageView.heightAnchor.constraint(equalToConstant: 100).isActive = true
         businessCardLogoImageView.widthAnchor.constraint(equalToConstant: 100).isActive = true
         
-        // name label
+        // full name label
         view.addSubview(fullNameLabel)
         fullNameLabel.topAnchor.constraint(equalTo: businessCardLogoImageView.bottomAnchor).isActive = true
         fullNameLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X notch
@@ -207,12 +302,87 @@ class CreateBusinessCardController: UIViewController, UIImagePickerControllerDel
         //fullNameLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         fullNameLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
         
-        // name text field
+        // full name text field
         view.addSubview(fullNameTextField)
         fullNameTextField.topAnchor.constraint(equalTo: businessCardLogoImageView.bottomAnchor).isActive = true
         fullNameTextField.leftAnchor.constraint(equalTo: fullNameLabel.rightAnchor).isActive = true // important one!
         fullNameTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
         fullNameTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // job title label
+        view.addSubview(jobTitleLabel)
+        jobTitleLabel.topAnchor.constraint(equalTo: fullNameLabel.bottomAnchor).isActive = true
+        jobTitleLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 because of the iPhone X
+        jobTitleLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //jobTitleLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        jobTitleLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // job title text field
+        view.addSubview(jobTitleTextField)
+        jobTitleTextField.topAnchor.constraint(equalTo: fullNameTextField.bottomAnchor).isActive = true
+        jobTitleTextField.leftAnchor.constraint(equalTo: jobTitleLabel.rightAnchor).isActive = true // important one
+        jobTitleTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        jobTitleTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // phone label
+        view.addSubview(phoneLabel)
+        phoneLabel.topAnchor.constraint(equalTo: jobTitleLabel.bottomAnchor).isActive = true
+        phoneLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X
+        phoneLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //phoneLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        phoneLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // phone text field
+        view.addSubview(phoneTextField)
+        phoneTextField.topAnchor.constraint(equalTo: jobTitleTextField.bottomAnchor).isActive = true
+        phoneTextField.leftAnchor.constraint(equalTo: phoneLabel.rightAnchor).isActive = true //important one
+        phoneTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        phoneTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // email label
+        view.addSubview(emailLabel)
+        emailLabel.topAnchor.constraint(equalTo: phoneLabel.bottomAnchor).isActive = true
+        emailLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X
+        emailLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //emailLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        emailLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // email text field
+        view.addSubview(emailTextField)
+        emailTextField.topAnchor.constraint(equalTo: phoneTextField.bottomAnchor).isActive = true
+        emailTextField.leftAnchor.constraint(equalTo: emailLabel.rightAnchor).isActive = true // important one
+        emailTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        emailTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // website label
+        view.addSubview(websiteLabel)
+        websiteLabel.topAnchor.constraint(equalTo: emailLabel.bottomAnchor).isActive = true
+        websiteLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X
+        websiteLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //websiteLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        websiteLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // website text field
+        view.addSubview(websiteTextField)
+        websiteTextField.topAnchor.constraint(equalTo: emailTextField.bottomAnchor).isActive = true
+        websiteTextField.leftAnchor.constraint(equalTo: websiteLabel.rightAnchor).isActive = true // important one
+        websiteTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        websiteTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // address label
+        view.addSubview(addressLabel)
+        addressLabel.topAnchor.constraint(equalTo: websiteLabel.bottomAnchor).isActive = true
+        addressLabel.leftAnchor.constraint(equalTo: view.leftAnchor, constant: 50).isActive = true // 50 beacause of the iPhone X
+        addressLabel.widthAnchor.constraint(equalToConstant: 100).isActive = true
+        //addressLabel.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        addressLabel.heightAnchor.constraint(equalToConstant: 50).isActive = true
+        
+        // address text field
+        view.addSubview(addressTextField)
+        addressTextField.topAnchor.constraint(equalTo: websiteTextField.bottomAnchor).isActive = true
+        addressTextField.leftAnchor.constraint(equalTo: addressLabel.rightAnchor).isActive = true // important one
+        addressTextField.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
+        addressTextField.heightAnchor.constraint(equalToConstant: 50).isActive = true
     }
     
 }

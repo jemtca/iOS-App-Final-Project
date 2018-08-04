@@ -9,10 +9,10 @@ class BusinessCardCell: UITableViewCell {
     
     var businessCard: BusinessCard? {
         didSet {
-            fullNameLabel.text = businessCard?.fullName
             if let imageData = businessCard?.imageData {
                 businessCardLogoView.image = UIImage(data: imageData)
             }
+            fullNameLabel.text = businessCard?.fullName
         }
     }
     
@@ -20,7 +20,7 @@ class BusinessCardCell: UITableViewCell {
         // image by default
         let imageView = UIImageView(image: #imageLiteral(resourceName: "select_logo_empty"))
         imageView.contentMode = UIViewContentMode.scaleAspectFill
-        // enable auto layout
+        // enable autolayout
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.layer.cornerRadius = 20
         imageView.clipsToBounds = true
@@ -34,7 +34,7 @@ class BusinessCardCell: UITableViewCell {
         //label.text = "Test"
         label.textColor = UIColor.black
         label.font = UIFont.boldSystemFont(ofSize: 20)
-        // enable auto layout
+        // enable autolayout
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -55,15 +55,10 @@ class BusinessCardCell: UITableViewCell {
         fullNameLabel.topAnchor.constraint(equalTo: topAnchor).isActive = true
         fullNameLabel.rightAnchor.constraint(equalTo: rightAnchor).isActive = true
         fullNameLabel.bottomAnchor.constraint(equalTo: bottomAnchor).isActive = true
-        
-        
-        
     }
     
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
-    
     
 }

@@ -30,6 +30,7 @@ struct CoreDataManager {
         
         do {
             let businessCards = try context.fetch(fetchRequest)
+            // check business cards on the screen and business cards on the console are the same
             businessCards.forEach { (businessCard) in
                 print(businessCard.fullName ?? "")
             }
