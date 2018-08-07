@@ -21,7 +21,7 @@ class BusinessCardsController: UITableViewController {
         
         view.backgroundColor = UIColor.white
         
-        navigationItem.title = "Business Cards"
+        navigationItem.title = "BC Wallet"
         
         tableView.backgroundColor = UIColor.mercury
         // hiding the separators
@@ -35,6 +35,8 @@ class BusinessCardsController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleReset))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBusinessCard))
+        
+        setupSearchBar()
     }
     
     @objc private func handleReset() {
@@ -69,6 +71,12 @@ class BusinessCardsController: UITableViewController {
         createBusinessCard.delegate = self
         
         present(navController, animated: true, completion: nil)
+    }
+    
+    private func setupSearchBar() {
+        let searchController = UISearchController(searchResultsController: nil)
+        navigationItem.searchController = searchController
+        //navigationItem.hidesSearchBarWhenScrolling = true
     }
 
 }
