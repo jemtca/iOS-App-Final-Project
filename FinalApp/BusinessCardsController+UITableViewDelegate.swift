@@ -75,15 +75,26 @@ extension BusinessCardsController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "cellID", for: indexPath) as! BusinessCardCell
+
+        let businessCard: BusinessCard
+        if isFiltering() {
+            businessCard = filteredBusinessCards[indexPath.row]
+        } else {
+            businessCard = businessCards[indexPath.row]
+
+        }
         
-        let businessCard = businessCards[indexPath.row]
         cell.businessCard = businessCard
         
         return cell
     }
     
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return businessCards.count
+        if isFiltering() {
+            return filteredBusinessCards.count
+        } else {
+            return businessCards.count
+        }
     }
     
 }

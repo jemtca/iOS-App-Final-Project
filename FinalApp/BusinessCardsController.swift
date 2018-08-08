@@ -10,11 +10,26 @@ class BusinessCardsController: UITableViewController {
 
     // var because the array has to change (adding/deleting elements from the array)
     var businessCards = [BusinessCard]() // empty array
+    var filteredBusinessCards = [BusinessCard]()
+    
+    let searchController = UISearchController(searchResultsController: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
 
+        // setup the search controller
+        searchController.searchResultsUpdater = self
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Search business cards"
+        navigationItem.searchController = searchController
+        definesPresentationContext = true
+        
+        // make the input readable (black to white)
+        searchController.searchBar.barStyle = UIBarStyle.black
+        // change the color of the cancel button (blue to white)
+        searchController.searchBar.tintColor = UIColor.white
+        
         // table view reloads itelf at the end of this function
         // otherwise, I have to reload: tableView.reloadData()
         self.businessCards = CoreDataManager.shared.fetchBusinessCards()
@@ -36,7 +51,7 @@ class BusinessCardsController: UITableViewController {
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBusinessCard))
         
-        setupSearchBar()
+        
     }
     
     @objc private func handleReset() {
@@ -73,10 +88,30 @@ class BusinessCardsController: UITableViewController {
         present(navController, animated: true, completion: nil)
     }
     
-    private func setupSearchBar() {
-        let searchController = UISearchController(searchResultsController: nil)
-        navigationItem.searchController = searchController
-        //navigationItem.hidesSearchBarWhenScrolling = true
+    private func searchBarIsEmpty() -> Bool {
+        // returns true if the text is empty or nil
+        return searchController.searchBar.text?.isEmpty ?? true
     }
-
+    
+    private func filteredContentForSearchText(_ searchtext: String, scope: String = "All") {
+        filteredBusinessCards = businessCards.filter({ (businessCard : BusinessCard) -> Bool in
+            return (businessCard.fullName?.lowercased().contains(searchtext.lowercased()))! // review!
+        })
+        
+        tableView.reloadData()
+        
+    }
+    
+    func isFiltering() -> Bool {
+        return searchController.isActive && !searchBarIsEmpty()
+    }
+    
 }
+
+// UISearchResultsUpdating delegate
+extension BusinessCardsController: UISearchResultsUpdating {
+    func updateSearchResults(for searchController: UISearchController) {
+        filteredContentForSearchText(searchController.searchBar.text!)
+    }
+}
+
