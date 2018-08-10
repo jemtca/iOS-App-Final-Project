@@ -21,8 +21,10 @@ class BusinessCardsController: UITableViewController {
         // setup the search controller
         searchController.searchResultsUpdater = self
         searchController.obscuresBackgroundDuringPresentation = false
+        searchController.hidesNavigationBarDuringPresentation = false //
         searchController.searchBar.placeholder = "Search business cards"
         navigationItem.searchController = searchController
+        navigationItem.hidesSearchBarWhenScrolling = true //
         definesPresentationContext = true
         
         // make the input readable (black to white)
@@ -50,7 +52,6 @@ class BusinessCardsController: UITableViewController {
         navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleReset))
         
         navigationItem.rightBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "plus").withRenderingMode(UIImageRenderingMode.alwaysOriginal), style: UIBarButtonItemStyle.plain, target: self, action: #selector(handleAddBusinessCard))
-        
         
     }
     

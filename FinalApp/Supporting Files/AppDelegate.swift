@@ -46,8 +46,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.makeKeyAndVisible()
         
         // instance of my view controller class (BusinessCardsController.swift)
-        let bcController = BusinessCardsController()
-        let navController = CustomNavigationController(rootViewController: bcController)
+        let businessCardController = BusinessCardsController()
+        let navController = CustomNavigationController(rootViewController: businessCardController)
         window?.rootViewController = navController
         
         return true
