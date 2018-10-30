@@ -9,7 +9,7 @@ iOS application to save business cards.
 
 ## Screenshots
 ![] (https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20portrait.gif)
-![] (Screenshots/iOS%20final%20landscape.gif)
+![] (https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20landscape.gif)
 
 ## Final project improvements
 * Stylizing the UI
