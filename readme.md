@@ -8,8 +8,8 @@ Goal (feature/s): Improve and add new features to the midterm app.
 iOS application to save business cards.
 
 ## Screenshots
-![] (https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20portrait.gif)
-![] (https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20landscape.gif)
+![](https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20portrait.gif)
+![](https://github.com/jemtca/iOS-App-Final-Project/blob/master/Screenshots/iOS%20final%20landscape.gif)
 
 ## Final project improvements
 * Stylizing the UI
